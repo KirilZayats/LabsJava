@@ -3,19 +3,24 @@ package co.by.main_pack;
 import co.by.food.Food;
 import co.by.food.UtilsClass;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import co.by.pathAndFiles;
+
 import static co.by.exceptionHendlers.ClassNotFoundExceptionsHandler.isSuchClassExist;
 
+/**
+ * Student Kiril Zayats
+ * group 4
+ */
+
 public class Main {
-    public static final String CLASSES_NAME_FILE = "Classes.txt";
 
     public static void main(String[] args) {
-       // args=UtilsClass.getBreakfastList();
+        // args=UtilsClass.getBreakfastList();
         Food[] breakfast = new Food[20];
-        UtilsClass.createListOfExistClasses(CLASSES_NAME_FILE);
+        UtilsClass.createListOfExistClasses(pathAndFiles.CLASSES_NAME_FILE.getPath());
         Set<String> specialParam = new HashSet<>();
         for (int argsIndex = 0, itemIndex = 0; argsIndex < args.length; argsIndex++) {
             if (args[argsIndex].charAt(0) == '-') {
@@ -23,19 +28,22 @@ public class Main {
                 continue;
             }
             String[] parts = args[argsIndex].split("/");
-            if (!isSuchClassExist(parts,CLASSES_NAME_FILE)) {
+
+           //Checks and handles exceptions "ClassNotFoundException" and "NoSuchMethodException"
+            if (!isSuchClassExist(parts, pathAndFiles.CLASSES_NAME_FILE.getPath())) {
                 continue;
             }
+            //creating and pushing objects of the class inheritors of the 'Food' class
             try {
-                Class myClass = Class.forName("co.by.food." + parts[0]);
-                if (parts.length == 1)
+                Class myClass = Class.forName(pathAndFiles.WAY_TO_FOOD.getPath() + parts[0]);
+                if (parts.length == 1) //if quantity of parameters is 0
                     breakfast[itemIndex++] = (Food) myClass.getConstructor()
                             .newInstance();
-                if (parts.length == 2)
+                if (parts.length == 2) //if quantity of parameters is 1
                     breakfast[itemIndex++] = (Food) myClass
                             .getConstructor(String.class)
                             .newInstance(parts[1]);
-                if (parts.length == 3)
+                if (parts.length == 3) //if quantity of parameters is 2
                     breakfast[itemIndex++] = (Food) myClass
                             .getConstructor(String.class, String.class)
                             .newInstance(parts[1], parts[2]);
@@ -43,6 +51,7 @@ public class Main {
                 System.err.println("this product '" + parts[0] + "' can't be added!");
             }
         }
+        //output with the execution of special parameters
         UtilsClass.processingOfSpecialParam(breakfast, specialParam);
         System.out.println("Good luck!");
     }

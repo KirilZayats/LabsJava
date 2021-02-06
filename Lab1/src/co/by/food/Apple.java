@@ -1,5 +1,6 @@
 package co.by.food;
 
+
 public class Apple extends Food {
     private String size;
 
