@@ -13,9 +13,9 @@ public class UtilsClass {
     /**
      * A method responsible for eating food with preprocessing of the food array according to the passed parameters:
      * -sort - sorting the food array according to the selected option:
-     *    1.By name length in direct oder;
-     *    2.By calories in reverse oder;
-     *    3.By quantity of additional parameters in reverse oder.
+     * 1.By name length in direct oder;
+     * 2.By calories in reverse oder;
+     * 3.By quantity of additional parameters in reverse oder.
      * -calories - counting the total number of calories in foods contained in a food array
      * If there are no special parameters, then the use of food without pretreatment
      *
@@ -62,6 +62,38 @@ public class UtilsClass {
                 }
             }
         }
+        if (parameters.size() == 2) {
+            if (parameters.contains("-calories") && parameters.contains("-sort")) {
+                Scanner cin = new Scanner(System.in);
+                System.out.println("""
+                        Choose the type of sort...
+                        1.By name length in direct oder;
+                        2.By calories in reverse oder;
+                        3.By quantity of additional parameters in reverse oder.""");
+                if (!cin.hasNextInt()) {
+                    System.err.println("This is not integer!");
+                }
+                int typeOfSort = cin.nextInt();
+                Food[] timely = sortFood(breakfast, typeOfSort);
+                for (Food item : breakfast) {
+                    if (item == null) break;
+                    item.consume();
+                }
+                System.out.println("In the breakfast were " + countNutritious(breakfast) + " calories");
+            } else {
+                System.out.println("There is no such parameter...");
+                for (Food item : breakfast) {
+                    if (item == null) break;
+                    item.consume();
+                }
+            }
+        } else {
+            System.out.println("There is no such parameter...");
+            for (Food item : breakfast) {
+                if (item == null) break;
+                item.consume();
+            }
+        }
     }
 
     /**
@@ -91,16 +123,17 @@ public class UtilsClass {
     public static int countNutritious(Food[] breakfast) {
         int collieries = 0;
         for (Food item : breakfast) {
-            collieries += item.calculateCalories();
+            if (item != null)
+                collieries += item.calculateCalories();
         }
         return collieries;
     }
 
     /**
      * Sorting the food array according to the selected option:
-     *    1.By name length in direct oder;
-     *    2.By calories in reverse oder;
-     *    3.By quantity of additional parameters in reverse oder.
+     * 1.By name length in direct oder;
+     * 2.By calories in reverse oder;
+     * 3.By quantity of additional parameters in reverse oder.
      *
      * @param breakfast  - array to sort
      * @param typeOfSort - sorting option number
@@ -117,15 +150,15 @@ public class UtilsClass {
             }
             case 2 -> {
                 Arrays.sort(breakfast, (o1, o2) -> {
-                    if (o1 == null) return -1;
-                    if (o2 == null) return 1;
+                    if (o1 == null) return 1;
+                    if (o2 == null) return -1;
                     return -Integer.compare(o1.calculateCalories(), o2.calculateCalories());
                 });
             }
             case 3 -> {
                 Arrays.sort(breakfast, (o1, o2) -> {
-                    if (o1 == null) return -1;
-                    if (o2 == null) return 1;
+                    if (o1 == null) return 1;
+                    if (o2 == null) return -1;
                     return -Integer.compare(o1.getClass().getFields().length, o2.getClass().getFields().length);
                 });
             }
@@ -137,7 +170,8 @@ public class UtilsClass {
     }
 
     /**
-     *The method reads class entities from the specified package,reads class names, and writes them to a file "fileName"
+     * The method reads class entities from the specified package,reads class names, and writes them to a file "fileName"
+     *
      * @param fileName - the name of the file in which the names of the existing classes in the package will be written
      */
     public static void createListOfExistClasses(String fileName) {
@@ -165,7 +199,8 @@ public class UtilsClass {
     }
 
     /**
-     *The method reads commands for creating objects of a certain classes of inheritors from the specified file
+     * The method reads commands for creating objects of a certain classes of inheritors from the specified file
+     *
      * @return array of commands for creating objects of certain classes of inheritors
      */
     public static String[] getBreakfastList() {

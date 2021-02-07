@@ -30,7 +30,7 @@ public class Cocktail extends Food  {
 
     @Override
     public void consume() {
-        System.out.println("The " + this + "was drunk");
+        System.out.println("The " + this + " was drunk");
     }
 
     @Override

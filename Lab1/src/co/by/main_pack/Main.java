@@ -18,11 +18,11 @@ import static co.by.exceptionHendlers.ClassNotFoundExceptionsHandler.isSuchClass
 public class Main {
 
     public static void main(String[] args) {
-        // args=UtilsClass.getBreakfastList();
+         args=UtilsClass.getBreakfastList();
         Food[] breakfast = new Food[20];
         UtilsClass.createListOfExistClasses(pathAndFiles.CLASSES_NAME_FILE.getPath());
         Set<String> specialParam = new HashSet<>();
-        for (int argsIndex = 0, itemIndex = 0; argsIndex < args.length; argsIndex++) {
+        for (int argsIndex = 0, itemIndex = 0; argsIndex < 5; argsIndex++) {
             if (args[argsIndex].charAt(0) == '-') {
                 specialParam.add(args[argsIndex]);
                 continue;
