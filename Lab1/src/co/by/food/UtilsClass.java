@@ -28,6 +28,7 @@ public class UtilsClass {
                 if (item == null) break;
                 item.consume();
             }
+            return;
         }
         if (parameters.size() == 1) {
             if (parameters.contains("-sort")) {
@@ -46,6 +47,7 @@ public class UtilsClass {
                     if (item == null) break;
                     item.consume();
                 }
+                return;
             } else {
                 if (parameters.contains("-calories")) {
                     for (Food item : breakfast) {
@@ -53,12 +55,14 @@ public class UtilsClass {
                         item.consume();
                     }
                     System.out.println("In the breakfast were " + countNutritious(breakfast) + " calories");
+                    return;
                 } else {
                     System.out.println("There is no such parameter...");
                     for (Food item : breakfast) {
                         if (item == null) break;
                         item.consume();
                     }
+
                 }
             }
         }
