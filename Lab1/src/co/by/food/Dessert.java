@@ -33,7 +33,7 @@ public class Dessert extends Food  {
 
     @Override
     public String toString() {
-        return super.toString() + "with the first component '" + component1.toUpperCase() +
+        return super.toString() + " with the first component '" + component1.toUpperCase() +
                 "' and the second component '" + component2.toUpperCase() + "'";
     }
 
@@ -41,12 +41,17 @@ public class Dessert extends Food  {
     public boolean equals(Object o) {
         if (!super.equals(o)) return false;
         if (!(o instanceof Dessert)) return false;
-        return component1.equals(((Dessert) o).component1) || component2.equals(((Dessert) o).component2);
+        return component1.equals(((Dessert) o).component1) && component2.equals(((Dessert) o).component2);
     }
 
     @Override
     public int calculateCalories() {
         return (int) component1.toLowerCase().charAt(0) * 10 +
                 (int) component2.toLowerCase().charAt(component2.length() - 1);
+    }
+
+    @Override
+    public String getName() {
+        return (super.getName()+this.getComponent1()+this.getComponent2());
     }
 }

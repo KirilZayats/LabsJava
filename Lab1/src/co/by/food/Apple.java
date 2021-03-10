@@ -38,4 +38,9 @@ public class Apple extends Food {
     public int calculateCalories() {
         return (int)size.toUpperCase().charAt(0)*(int)getName().toUpperCase().charAt(0);
     }
+
+    @Override
+    public String getName() {
+        return (super.getName()+this.getSize());
+    }
 }

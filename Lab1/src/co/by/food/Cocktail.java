@@ -35,18 +35,23 @@ public class Cocktail extends Food  {
 
     @Override
     public String toString() {
-        return super.toString() + "with drink '" + drink.toUpperCase() + "' and fruit '" + fruit.toUpperCase() + "'";
+        return super.toString() + " with drink '" + drink.toUpperCase() + "' and fruit '" + fruit.toUpperCase() + "'";
     }
 
     @Override
     public boolean equals(Object o) {
         if (!super.equals(o)) return false;
         if (!(o instanceof Cocktail)) return false;
-        return drink.equals(((Cocktail) o).drink) || fruit.equals(((Cocktail) o).fruit);
+        return drink.equals(((Cocktail) o).drink) && fruit.equals(((Cocktail) o).fruit);
     }
 
     @Override
     public int calculateCalories() {
         return (int)drink.toUpperCase().charAt(0)*10+(int)fruit.toUpperCase().charAt(fruit.length()-1)*10;
+    }
+
+    @Override
+    public String getName() {
+        return (super.getName()+this.getDrink()+this.getFruit());
     }
 }

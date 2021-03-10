@@ -23,80 +23,33 @@ public class UtilsClass {
      * @param parameters - list of special settings that need to be applied to the array of food
      */
     public static void processingOfSpecialParam(Food[] breakfast, Set<String> parameters) {
-        if (parameters.size() == 0) {
-            for (Food item : breakfast) {
-                if (item == null) break;
-                item.consume();
-            }
-            return;
-        }
-        if (parameters.size() == 1) {
-            if (parameters.contains("-sort")) {
-                Scanner cin = new Scanner(System.in);
-                System.out.println("""
-                        Choose the type of sort...
-                        1.By name length in direct oder;
-                        2.By calories in reverse oder;
-                        3.By quantity of additional parameters in reverse oder.""");
-                if (!cin.hasNextInt()) {
-                    System.err.println("This is not integer!");
-                }
-                int typeOfSort = cin.nextInt();
-                Food[] timely = sortFood(breakfast, typeOfSort);
-                for (Food item : timely) {
-                    if (item == null) break;
-                    item.consume();
-                }
-                return;
-            } else {
-                if (parameters.contains("-calories")) {
-                    for (Food item : breakfast) {
-                        if (item == null) break;
-                        item.consume();
-                    }
-                    System.out.println("In the breakfast were " + countNutritious(breakfast) + " calories");
-                    return;
-                } else {
-                    System.out.println("There is no such parameter...");
-                    for (Food item : breakfast) {
-                        if (item == null) break;
-                        item.consume();
-                    }
 
-                }
-            }
+        if (parameters.contains("-sort"))
+            breakfast = UiSort(breakfast);
+        consumer(breakfast);
+        if (parameters.contains("-calories")) {
+            System.out.println("In the breakfast were " + countNutritious(breakfast) + " calories");
         }
-        if (parameters.size() == 2) {
-            if (parameters.contains("-calories") && parameters.contains("-sort")) {
-                Scanner cin = new Scanner(System.in);
-                System.out.println("""
-                        Choose the type of sort...
-                        1.By name length in direct oder;
-                        2.By calories in reverse oder;
-                        3.By quantity of additional parameters in reverse oder.""");
-                if (!cin.hasNextInt()) {
-                    System.err.println("This is not integer!");
-                }
-                int typeOfSort = cin.nextInt();
-                Food[] timely = sortFood(breakfast, typeOfSort);
-                for (Food item : breakfast) {
-                    if (item == null) break;
-                    item.consume();
-                }
-                System.out.println("In the breakfast were " + countNutritious(breakfast) + " calories");
-            } else {
-                System.out.println("There is no such parameter...");
-                for (Food item : breakfast) {
-                    if (item == null) break;
-                    item.consume();
-                }
-            }
-        } else {
-            System.out.println("There is no such parameter...");
-            for (Food item : breakfast) {
-                if (item == null) break;
-                item.consume();
-            }
+    }
+
+    public static Food[] UiSort(Food[] breakfast) {
+        Scanner cin = new Scanner(System.in);
+        System.out.println("""
+                Choose the type of sort...
+                1.By name length in direct oder;
+                2.By calories in reverse oder;
+                3.By quantity of additional parameters in reverse oder.""");
+        if (!cin.hasNextInt()) {
+            System.err.println("This is not integer!");
+        }
+        int typeOfSort = cin.nextInt();
+        return sortFood(breakfast, typeOfSort);
+    }
+
+    public static void consumer(Food[] breakfast) {
+        for (Food item : breakfast) {
+            if (item == null) break;
+            item.consume();
         }
     }
 
@@ -116,6 +69,7 @@ public class UtilsClass {
         }
         return equals;
     }
+
 
     /**
      * Calculates the total number of calories in the "breakfast" array
@@ -149,15 +103,16 @@ public class UtilsClass {
                 Arrays.sort(breakfast, (o1, o2) -> {
                     if (o1 == null) return 1;
                     if (o2 == null) return -1;
-                    return o1.getName().compareTo(o2.getName());
+                    return Integer.compare(o1.getName().length(), o2.getName().length());
                 });
             }
             case 2 -> {
-                Arrays.sort(breakfast, (o1, o2) -> {
+                Comparator<Food> c = (o1, o2) -> {
                     if (o1 == null) return 1;
                     if (o2 == null) return -1;
                     return -Integer.compare(o1.calculateCalories(), o2.calculateCalories());
-                });
+                };
+                Arrays.sort(breakfast,c);
             }
             case 3 -> {
                 Arrays.sort(breakfast, (o1, o2) -> {
