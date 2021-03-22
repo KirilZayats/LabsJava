@@ -8,4 +8,4 @@ Apple/small
 Sandwich/bef/butter
 Sandwich/beef/butter
 Sandwich/beef/butt
--sort
+-calories

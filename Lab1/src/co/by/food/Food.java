@@ -5,9 +5,7 @@ import co.by.main_pack.Consumable;
 
 public abstract class Food implements Consumable,Nutritious {
     private String name;
-    protected Food(String name) {
-        this.name=name;
-    }
+
 
     public String getName() {
         return name;
@@ -34,5 +32,7 @@ public abstract class Food implements Consumable,Nutritious {
      return (int) name.toUpperCase().charAt(0)*100;
     }
 
-
+    protected Food(String name) {
+        this.name=name;
+    }
 }

@@ -1,2 +1,0 @@
-# LabsJava
-University Java labs

@@ -1,5 +1,6 @@
 package co.by.main_pack;
 
+import co.by.food.Dessert;
 import co.by.food.Food;
 import co.by.food.UtilsClass;
 

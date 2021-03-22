@@ -147,11 +147,9 @@ public class UtilsClass {
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));) {
             for (Class timely : classes)
                 bufferedWriter.write(timely.getName() + "\n");
-            bufferedWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,8 +161,7 @@ public class UtilsClass {
      * @return array of commands for creating objects of certain classes of inheritors
      */
     public static String[] getBreakfastList() {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("Commands.txt"));
+        try ( BufferedReader bufferedReader = new BufferedReader(new FileReader("Commands.txt"));){
             String[] list = new String[20];
             String str;
             int iter = 0;
